@@ -32,8 +32,7 @@ median(step_data_sum$total_steps)
 ```
 
 ```{r}
-plot_1_hist <- hist(step_data_sum$total_steps, main = "Total Steps per Day", xlab = "Sum of Steps Per Day", ylab = "Count of Days")
-print(plot_1_hist)
+hist(step_data_sum$total_steps, main = "Total Steps per Day", xlab = "Sum of Steps Per Day", ylab = "Count of Days")
 ```
 
 ## What is the average daily activity pattern?
