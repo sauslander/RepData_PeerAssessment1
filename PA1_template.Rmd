@@ -4,7 +4,8 @@ output:
   html_document:
     keep_md: true
 ---
-
+```{r}
+rmarkdown::render(
 
 ## Loading and preprocessing the data
 
@@ -93,6 +94,5 @@ step_data_week_inter <- summarise(group_by(step_data_week, interval, `is_weekend
 library(ggplot2)
 qplot(step_data_week_inter$interval, step_data_week_inter$average_steps, group = `is_weekend?`, data = step_data_week_inter, geom = "line", col = `is_weekend?`, xlab = "Time Interval", ylab = "Average Steps", main = "Average Steps Weekend Vs WeekDay") + scale_color_manual(labels = c("Weekday", "Weekend"), values = c("red", "blue"))
 ```
-```{r}
-rmarkdown::render()
+)
 ```
