@@ -74,7 +74,7 @@ median(step_data_sum_2$total_steps)
 ```{r}
 hist(step_data_sum_2$total_steps, main = "Total Steps per Day (with replaced values)", xlab = "Sum of Steps Per Day", ylab = "Count of Days")
 ```
-Histogram called plot_3_hist in repo
+Histogram called plot_3_hist in repo: https://github.com/sauslander/RepData_PeerAssessment1/blob/master/plot_3_hist.png
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
