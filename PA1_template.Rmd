@@ -45,7 +45,7 @@ step_data_means <- summarise(group_by(step_data_no_na, interval), average_steps 
 ```{r}
 plot(step_data_means$interval, step_data_means$average_steps, xlab = "Time Interval", ylab = "Average Steps Per Inteval", type = "l")
 ```
-Plot called plot_2_line in repo
+Plot called plot_2_line in repo: https://github.com/sauslander/RepData_PeerAssessment1/blob/master/plot_2_line.png
 
 ###### Max average steps for daily intervals
 
