@@ -33,7 +33,7 @@ median(step_data_sum$total_steps)
 ```{r}
 hist(step_data_sum$total_steps, main = "Total Steps per Day", xlab = "Sum of Steps Per Day", ylab = "Count of Days")
 ```
-Histogram called plot_1_hist in repo
+Histogram called plot_1_hist in repo: https://github.com/sauslander/RepData_PeerAssessment1/blob/master/plot_1_hist.png
 
 ## What is the average daily activity pattern?
 
