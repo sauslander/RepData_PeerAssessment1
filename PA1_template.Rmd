@@ -8,18 +8,87 @@ output:
 
 ## Loading and preprocessing the data
 
+###### Read in the raw data set
 
+```{r}
+step_data_raw <- read.csv("activity.csv")
+step_data_no_na <- na.omit(step_data_raw)
+```
 
 ## What is mean total number of steps taken per day?
 
+###### Use dpylr package to manipulate data
 
+```{r}
+library(dplyr)
+step_data_sum <- summarise(group_by(step_data_no_na, date), total_steps = sum(steps))
+```
+
+###### Mean and Median for the data excluding NA values
+
+```{r}
+mean(step_data_sum$total_steps) 
+median(step_data_sum$total_steps) 
+```
+
+```{r}
+hist(step_data_sum$total_steps, main = "Total Steps per Day", xlab = "Sum of Steps Per Day", ylab = "Count of Days")
+```
 
 ## What is the average daily activity pattern?
 
 
+```{r}
+step_data_means <- summarise(group_by(step_data_no_na, interval), average_steps = mean(steps))
+```
+
+```{r}
+plot(step_data_means$interval, step_data_means$average_steps, xlab = "Time Interval", ylab = "Average Steps Per Inteval", type = "l")
+```
+
+###### Max average steps for daily intervals
+
+```{r}
+top_6_average_steps <- head(step_data_means[order(-step_data_means$average_steps, step_data_means$interval), ])
+max_average_steps <- top_6_average_steps[1,]
+max_average_steps
+```
 
 ## Imputing missing values
 
+###### I am setting the missing values by taking average total number of steps per day (10766.19) and dividing by the number of intervals (288) in a day
+###### average number of steps per interval = 10766.19 / 288 --> 37.4
 
+```{r}
+step_data_replace <- step_data_raw %>% mutate(replace(step_data_raw$steps, which(is.na(step_data_raw$steps)),37.4))
+colnames(step_data_replace) <- c("steps_na", "date", "interval", "steps")
+step_data_sum_2 <- summarise(group_by(step_data_replace, date), total_steps = sum(steps))
+mean(step_data_sum_2$total_steps)
+median(step_data_sum_2$total_steps)
+```
+
+###### Difference in mean comparing NA data set and replaced NA data set --> 0.66 steps
+###### Difference in median comparing NA data set and replaced NA data set --> 6.2 steps
+
+```{r}
+hist(step_data_sum_2$total_steps, main = "Total Steps per Day (with replaced values)", xlab = "Sum of Steps Per Day", ylab = "Count of Days")
+```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+###### create new data set for weekday analysis by creating an additional column to identify weekday vs weekend
+
+```{r}
+library(chron)
+week_col <- is.weekend(as.Date(step_data_replace$date))
+step_data_week <- cbind(step_data_replace, week_col)
+colnames(step_data_week) <- c("steps_na", "date", "interval", "steps", "is_weekend?")
+```
+
+###### summarise data set then plot comparing weekday vs weekend trends
+
+```{r}
+step_data_week_inter <- summarise(group_by(step_data_week, interval, `is_weekend?`), average_steps = mean(steps))
+library(ggplot2)
+qplot(step_data_week_inter$interval, step_data_week_inter$average_steps, group = `is_weekend?`, data = step_data_week_inter, geom = "line", col = `is_weekend?`, xlab = "Time Interval", ylab = "Average Steps", main = "Average Steps Weekend Vs WeekDay") + scale_color_manual(labels = c("Weekday", "Weekend"), values = c("red", "blue"))
+```
