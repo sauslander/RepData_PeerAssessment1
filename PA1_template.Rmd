@@ -31,7 +31,7 @@ median(step_data_sum$total_steps)
 ```
 
 ```{r}
-knitr::plot_1_hist <- hist(step_data_sum$total_steps, main = "Total Steps per Day", xlab = "Sum of Steps Per Day", ylab = "Count of Days")
+hist(step_data_sum$total_steps, main = "Total Steps per Day", xlab = "Sum of Steps Per Day", ylab = "Count of Days")
 ```
 
 
